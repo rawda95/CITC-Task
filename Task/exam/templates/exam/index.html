@@ -1,0 +1,48 @@
+{% extends 'exam/base.html' %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+
+    <!-- Courses -->
+    <div class="row">
+        <div class="col-sm-12">
+            <h3> Courses</h3>
+        </div>
+        {% if courses %}
+            {% for course in courses %}
+                <div class="col-sm-4 col-lg-2">
+                    <div class="thumbnail">
+                        <a href="{%url 'exam:course-detail' course.pk%}">
+                            <h2>{{ course.name }}</h2>
+                        </a>
+                        <h4>chapters : {{ course.chapter_set.count}}</h4>
+                        <div class="caption">
+                            <!-- View Details -->
+                            <a href="{%url 'exam:course-detail' course.pk%}" class="btn btn-primary btn-sm" role="button">View Details</a>
+
+                            <!-- Delete Course -->
+                            <form action="{%url 'exam:course_delete' course.pk%}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="album_id" value="{{ album.id }}" />
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </div>
+                </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-sm-12">
+                <br>
+                <a href="{%url 'exam:create-course'%}">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Add an Course
+                    </button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'exam/base.html' %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+
+    <!-- Courses -->
+    <div class="row">
+        <div class="col-sm-11">
+            <h3> question</h3>
+        </div>
+        <div class="col-sm-6 col-lg-6">
+            <div class="thumbnail">
+                <div class="caption">
+                    <form role="form" action="{% url 'exam:exam_view' course.id %}" method="post"
+                          enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="r">reminding question number :</label>
+                            <input type="number" min="0" class="form-control" id="r" name="reminding">
+
+                        </div>
+                          <div class="form-group">
+                            <label for="u">understanding question number :</label>
+                            <input type="number" min="0" class="form-control" id="u" name="understanding">
+
+                        </div>
+                          <div class="form-group">
+                            <label for="C">creativity question number :</label>
+                            <input type="number" min="0" class="form-control" id="C" name="creativity">
+
+                        </div>
+                        <button type="submit" class="btn btn-success">Success</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%if exam %}
+{{exam}}
+{%endif %}
+{% endblock %}
