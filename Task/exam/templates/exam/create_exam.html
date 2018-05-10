@@ -11,7 +11,7 @@
         <div class="col-sm-6 col-lg-6">
             <div class="thumbnail">
                 <div class="caption">
-                    <form role="form" action="{% url 'exam:exam_view' course.id %}" method="post"
+                    <form role="form" action="{% url 'exam:exam_create_view' course.id %}" method="post"
                           enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="form-group">
@@ -37,7 +37,4 @@
         </div>
     </div>
 </div>
-{%if exam %}
-{{exam}}
-{%endif %}
 {% endblock %}

@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import index, create_course, course_detail, \
     course_delete, chapter_detail, create_question, create_chapter, \
-    chapter_delete, delete_question, update_question, exam_view
+    chapter_delete, delete_question, update_question, exam_create_view, show_exam_create
 
 app_name = 'exam'
 urlpatterns = [
@@ -21,5 +21,7 @@ urlpatterns = [
     path('<int:course_id>/<int:chapter_name>/<int:question_id>/delete', delete_question, name='delete_question'),
 
     # exam
-    path('<int:course_id>/exam', exam_view , name='exam_view')
+    path('<int:course_id>/exam', exam_create_view, name='exam_create_view'),
+    path('<int:course_id>/check-q', show_exam_create, name='show_exam_create')
+
 ]

@@ -187,7 +187,7 @@ def update_question(request, course_id, chapter_name, question_id):
     return render(request, 'exam/update_question.html', context)
 
 
-def exam_view(request, course_id):
+def exam_create_view(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     if request.method == "POST":
         reminding = request.POST['reminding']
@@ -195,9 +195,20 @@ def exam_view(request, course_id):
         creativity = request.POST['creativity']
         num_of_objective = [int(reminding), int(understanding), int(creativity)]
         exam = create_exam(course_id, num_of_objective)
-        return render(request, 'exam/create_exam.html', {'course': course, 'exam': exam})
+        return render(request, 'exam/show_exam.html', {'exam': exam})
 
     return render(request, 'exam/create_exam.html', {'course': course})
+
+
+
+
+def show_exam_create(request, course_id):
+    course = get_object_or_404(Course, pk=course_id)
+    if check_num_of_q_in_chapter(course_id):
+        return render(request, 'exam/course-detail.html', {'course': course,
+                                                           'error': 'each chapter should have 12 question pleses add questions to create exam'})
+    return redirect('exam:exam_create_view', course_id=course.pk)
+
 
 
 def create_exam(course_id, num_of_objective):
@@ -244,6 +255,15 @@ def create_exam(course_id, num_of_objective):
                 final_exam.append(q)
     print(final_exam)
     return final_exam
+
+
+def check_num_of_q_in_chapter(course_id):
+    course = get_object_or_404(Course, pk=course_id)
+    chapters = course.chapter_set.all()
+    for chapter in chapters:
+        if chapter.question_set.count() != 12:
+            return True
+    return False
 
 
 def ob_chapter(objective, chapter):

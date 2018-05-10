@@ -1,0 +1,36 @@
+{% extends 'exam/base.html' %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+    <!-- Courses -->
+    <div class="row">
+        <div class="col-sm-11">
+            <h3> {{course.name}}:{{chapter.name}}</h3>
+        </div>
+        <div class="col-sm-6 col-lg-6">
+            <div class="thumbnail">
+                <div class="caption">
+                    {%for q in exam %}
+                    <form role="form" action="" method="post" enctype="multipart/form-data">
+                        <div>
+                            {% csrf_token %}
+
+                            <label>{{q.content }}</label> <br>
+
+                            {%for choice in q.choice_set.all %}
+                            <label class="checkbox-inline"><input type="checkbox" value="{{choice}}">{{choice}}</label>
+                            {%endfor %}
+                        </div>
+                        {%endfor%}
+
+                        <button type="submit" class="btn btn-success">Success</button>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
